@@ -35,6 +35,16 @@ def create_app(config_name):
         functions.add_flight(source, destination, departureDay, departureHour, duration, seats, id)
         return redirect('/add_flight')
 
+    @app.route('/remove_flight', methods=['GET'])
+    def remove_flight():
+        return render_template('remove_flight.html')
+
+    @app.route('/remove_flight', methods=['POST'])
+    def remove_flight_post():
+        id = request.form['id']
+        functions.remove_flight(id)
+        return redirect('/remove_flight')
+
     login_manager.init_app(app)
     login_manager.login_message = 'You must be logged in to access this page'
     login_manager.login_view = 'auth.login'
