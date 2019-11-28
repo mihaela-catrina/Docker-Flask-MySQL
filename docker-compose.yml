@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  website:
+    build: .
+    links:
+      - db
+    env_file:
+      - '.env'
+    ports:
+      - '8000:5000'
+
+  db:
+    image: mysql:latest
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: db_admin
+      MYSQL_PASSWORD: db_admin
+      MYSQL_DATABASE: sprc_db
+
