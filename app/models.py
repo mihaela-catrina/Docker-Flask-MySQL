@@ -3,6 +3,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
 
+class Flight(db.Model):
+    """
+    Create an Flight table
+    """
+    __tablename__ = 'flights'
+    __table_args__ = (
+        db.CheckConstraint('departure_hour > -1'),
+        db.CheckConstraint('departure_hour < 24'),
+    )
+    id = db.Column(db.String(255), primary_key=True)
+    source = db.Column(db.String(255), nullable=False)
+    destination = db.Column(db.String(255), nullable=False)
+    departure_hour = db.Column(db.Integer)
+    departure_day = db.Column(db.Integer)
+    duration = db.Column(db.Integer)
+    seats = db.Column(db.Integer)
+
 
 class Employee(UserMixin, db.Model):
     """
