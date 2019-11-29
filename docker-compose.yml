@@ -1,16 +1,24 @@
 version: '2'
 
 services:
-  website:
-    build: .
+  client:
+    build: client/.
+    links:
+      - managemenet_server
+    stdin_open: true
+    tty: true
+
+  managemenet_server:
+    build: management-app/.
     links:
       - db
     env_file:
-      - '.env'
+      - 'management-app/.env'
     ports:
       - '8000:5000'
 
   db:
+    build: db/.
     image: mysql:5.7.22
     ports:
       - "32000:3306"

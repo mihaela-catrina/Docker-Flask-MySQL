@@ -12,5 +12,4 @@ flask db init
 flask db migrate
 flask db upgrade
 
-cd /install_dir
 python3 run.py

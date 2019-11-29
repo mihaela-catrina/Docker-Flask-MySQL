@@ -11,14 +11,9 @@ MAINTAINER Mihaela <catrina.mihaela20@gmail.com>
 RUN apt update && \
     apt install -y netcat-openbsd
 
-# set the env variable to tell where the app will be installed inside the docker
-
-ENV INSTALL_PATH /install_dir
-RUN mkdir -p $INSTALL_PATH
-
-#this sets the context of where commands will be ran in and is documented
-
-WORKDIR $INSTALL_PATH
+# Place app in container.
+COPY . /opt/www
+WORKDIR /opt/www
 
 # Copy in the application code from your work station at the current directory
 # over to the working directory.
@@ -26,8 +21,5 @@ WORKDIR $INSTALL_PATH
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . .
 
-RUN chmod +x /install_dir/docker-entrypoint.sh
-
-CMD ["/bin/bash", "/install_dir/docker-entrypoint.sh"]
+CMD ["/bin/bash", "management_app_entrypoint.sh"]
