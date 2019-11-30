@@ -1,6 +1,15 @@
 version: '2'
 
 services:
+  flight_service:
+    build: flightService/.
+    links:
+      - db
+    env_file:
+      - 'flightService/.env'
+    ports:
+      - '8080:6000'
+
   client:
     build: client/.
     links:

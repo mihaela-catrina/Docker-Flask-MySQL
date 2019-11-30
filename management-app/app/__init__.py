@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask import jsonify
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -20,7 +21,6 @@ def create_app(config_name):
 
     @app.route('/add_flight', methods=['GET'])
     def add_flight():
-        # return functions.add_flight()
         return render_template('add_flight.html')
 
     @app.route('/add_flight', methods=['POST'])
@@ -33,7 +33,7 @@ def create_app(config_name):
         seats = request.form['seats']
         id = request.form['id']
         functions.add_flight(source, destination, departureDay, departureHour, duration, seats, id)
-        return redirect('/add_flight')
+        return jsonify(response="Flight added!"), 200
 
     @app.route('/remove_flight', methods=['GET'])
     def remove_flight():
@@ -43,7 +43,7 @@ def create_app(config_name):
     def remove_flight_post():
         id = request.form['id']
         functions.remove_flight(id)
-        return redirect('/remove_flight')
+        return jsonify(response="Flight removed!"), 200
 
     login_manager.init_app(app)
     login_manager.login_message = 'You must be logged in to access this page'
