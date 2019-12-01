@@ -29,4 +29,14 @@ class Booking(db.Model):
     __tablename__ = 'bookings'
 
     id = db.Column(db.Integer, primary_key=True)
-    flight_id = db.Column(db.String(255), nullable=False)
+    flight_ids = db.Column(db.String(255), nullable=False)
+
+
+class Ticket(db.Model):
+    """
+    Create a table for the tickets already bought
+    """
+    __tablename__ = 'tickets'
+
+    id = db.Column(db.Integer, primary_key=True)
+    reservation_id = db.Column(db.Integer)

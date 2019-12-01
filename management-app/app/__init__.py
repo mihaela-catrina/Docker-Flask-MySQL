@@ -32,8 +32,11 @@ def create_app(config_name):
         duration = request.form['duration']
         seats = request.form['seats']
         id = request.form['id']
-        functions.add_flight(source, destination, departureDay, departureHour, duration, seats, id)
-        return jsonify(response="Flight added!"), 200
+        res = functions.add_flight(source, destination, departureDay, departureHour, duration, seats, id)
+        if res:
+            return jsonify(response="Flight added!"), 200
+        else:
+            return jsonify(response="Try another ID -> this flight exists!"), 200
 
     @app.route('/remove_flight', methods=['GET'])
     def remove_flight():
@@ -42,8 +45,11 @@ def create_app(config_name):
     @app.route('/remove_flight', methods=['POST'])
     def remove_flight_post():
         id = request.form['id']
-        functions.remove_flight(id)
-        return jsonify(response="Flight removed!"), 200
+        rsp = functions.remove_flight(id)
+        if rsp:
+            return jsonify(response="Flight removed!"), 200
+        else:
+            return jsonify(response="We can't find this flight!"), 400
 
     login_manager.init_app(app)
     login_manager.login_message = 'You must be logged in to access this page'

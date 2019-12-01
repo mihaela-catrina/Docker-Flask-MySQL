@@ -5,7 +5,7 @@ from app import create_app
 
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')  # Address of your .env file
+dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 
